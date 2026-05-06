@@ -1,0 +1,6 @@
+@PRUEBA_HostAddress = http://localhost:5095
+
+GET {{PRUEBA_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
