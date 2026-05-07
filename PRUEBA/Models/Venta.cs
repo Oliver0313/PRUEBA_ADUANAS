@@ -7,11 +7,11 @@ public partial class Venta
 {
     public int Id { get; set; }
 
-    public string Fecha { get; set; } = null!;
+    public DateTime Fecha { get; set; }
 
     public string Cliente { get; set; } = null!;
 
     public string ListaProductos { get; set; } = null!;
 
-    public string Total { get; set; } = null!;
+    public decimal Total { get; set; }
 }
