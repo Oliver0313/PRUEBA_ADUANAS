@@ -40,12 +40,19 @@ namespace PRUEBA.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Venta venta)
         {
-            venta.Fecha = DateTime.Now; // se asigna automáticamente
+            try
+            {
+                venta.Fecha = DateTime.Now;
 
-            _context.Ventas.Add(venta);
-            await _context.SaveChangesAsync();
+                _context.Ventas.Add(venta);
+                await _context.SaveChangesAsync();
 
-            return Ok(venta);
+                return Ok(venta);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); 
+            }
         }
 
         // 🔹 PUT: api/ventas/5

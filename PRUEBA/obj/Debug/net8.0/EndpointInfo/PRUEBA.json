@@ -399,8 +399,8 @@
             "nullable": true
           },
           "telefono": {
-            "type": "string",
-            "nullable": true
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -421,12 +421,12 @@
             "nullable": true
           },
           "precio": {
-            "type": "string",
-            "nullable": true
+            "type": "number",
+            "format": "double"
           },
           "stock": {
-            "type": "string",
-            "nullable": true
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
