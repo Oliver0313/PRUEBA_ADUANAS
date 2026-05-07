@@ -11,5 +11,5 @@ public partial class Cliente
 
     public string Correo { get; set; } = null!;
 
-    public string Telefono { get; set; } = null!;
+    public int Telefono { get; set; }
 }
