@@ -9,6 +9,7 @@ C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\PRUEBA.pdb
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Humanizer.dll
+C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -138,4 +139,3 @@ C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\refint\PRUEBA.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.pdb
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.genruntimeconfig.cache
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\ref\PRUEBA.dll
-C:\Users\mende\source\repos\PRUEBA\PRUEBA\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

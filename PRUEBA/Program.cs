@@ -43,8 +43,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -55,26 +56,45 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,               // 🔥 valida emisor
+        ValidateAudience = true,             // 🔥 valida audiencia
+        ValidateIssuerSigningKey = true,     // 🔥 valida firma
+        ValidateLifetime = true,             // 🔥 valida expiración
+
+        ClockSkew = TimeSpan.Zero,           // 🔥 sin margen de tiempo
+
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
+
         IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+
+    
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("❌ Token inválido");
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("✅ Token válido");
+            return Task.CompletedTask;
+        }
     };
 });
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 

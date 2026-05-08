@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PRUEBA.Data;
 using PRUEBA.Models;
 
 namespace PRUEBA.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
@@ -26,30 +28,27 @@ namespace PRUEBA.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
-            if (producto == null) return NotFound("Producto no encontrado");
+            if (producto == null) return NotFound();
             return Ok(producto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Producto producto)
+        public async Task<IActionResult> Post(Producto producto)
         {
-            if (producto == null) return BadRequest();
-
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
-
             return Ok(producto);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Producto producto)
+        public async Task<IActionResult> Put(int id, Producto producto)
         {
-            if (id != producto.Id) return BadRequest("ID no coincide");
+            if (id != producto.Id) return BadRequest();
 
-            var existe = await _context.Productos.AnyAsync(x => x.Id == id);
-            if (!existe) return NotFound("Producto no existe");
+            var existe = await _context.Productos.AnyAsync(p => p.Id == id);
+            if (!existe) return NotFound();
 
-            _context.Productos.Update(producto);
+            _context.Entry(producto).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return Ok(producto);
@@ -64,7 +63,7 @@ namespace PRUEBA.Controllers
             _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
 
-            return Ok("Eliminado");
+            return Ok("Producto eliminado");
         }
     }
 }

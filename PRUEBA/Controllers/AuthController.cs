@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using PRUEBA.Data;
 using PRUEBA.Models;
+using System.Linq;
 
 namespace PRUEBA.Controllers
 {
@@ -12,23 +15,48 @@ namespace PRUEBA.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly AppDbContext _context;
 
-        public AuthController(IConfiguration config)
+        public AuthController(IConfiguration config, AppDbContext context)
         {
             _config = config;
+            _context = context;
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] Usuario user)
+        {
+            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.Password))
+                return BadRequest("Datos inválidos");
+
+            if (_context.Usuario.Any(u => u.Username == user.Username))
+                return BadRequest("El usuario ya existe");
+
+            _context.Usuario.Add(user);
+            _context.SaveChanges();
+
+            return Ok("Usuario creado");
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] Usuario user)
         {
-            if (user.Username != "admin" || user.Password != "1234")
-                return Unauthorized();
+            var usuario = _context.Usuario
+                .FirstOrDefault(u =>
+                    u.Username == user.Username &&
+                    u.Password == user.Password);
 
-            var token = GenerarToken(user.Username);
+            if (usuario == null)
+                return Unauthorized("Credenciales incorrectas");
+
+            var token = GenerarToken(usuario);
+
             return Ok(new { token });
         }
 
-        private string GenerarToken(string username)
+        private string GenerarToken(Usuario usuario)
         {
             var jwtSettings = _config.GetSection("Jwt");
 
@@ -40,14 +68,15 @@ namespace PRUEBA.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.Name, usuario.Username),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())
             };
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(2),
+                expires: DateTime.UtcNow.AddHours(2), 
                 signingCredentials: creds
             );
 

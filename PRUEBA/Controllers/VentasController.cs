@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PRUEBA.Data;
 using PRUEBA.Models;
 
 namespace PRUEBA.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class VentasController : ControllerBase
@@ -26,32 +28,27 @@ namespace PRUEBA.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var venta = await _context.Ventas.FindAsync(id);
-            if (venta == null) return NotFound("Venta no encontrada");
+            if (venta == null) return NotFound();
             return Ok(venta);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Venta venta)
+        public async Task<IActionResult> Post(Venta venta)
         {
-            if (venta == null) return BadRequest();
-
-            venta.Fecha = DateTime.Now;
-
             _context.Ventas.Add(venta);
             await _context.SaveChangesAsync();
-
             return Ok(venta);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Venta venta)
+        public async Task<IActionResult> Put(int id, Venta venta)
         {
-            if (id != venta.Id) return BadRequest("ID no coincide");
+            if (id != venta.Id) return BadRequest();
 
-            var existe = await _context.Ventas.AnyAsync(x => x.Id == id);
-            if (!existe) return NotFound("Venta no existe");
+            var existe = await _context.Ventas.AnyAsync(v => v.Id == id);
+            if (!existe) return NotFound();
 
-            _context.Ventas.Update(venta);
+            _context.Entry(venta).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return Ok(venta);
@@ -66,7 +63,7 @@ namespace PRUEBA.Controllers
             _context.Ventas.Remove(venta);
             await _context.SaveChangesAsync();
 
-            return Ok("Eliminado");
+            return Ok("Venta eliminada");
         }
     }
 }
