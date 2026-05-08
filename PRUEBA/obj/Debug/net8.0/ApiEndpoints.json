@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "PRUEBA.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "PRUEBA.Models.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PRUEBA.Controllers.ClientesController",
     "Method": "Get",
     "RelativePath": "api/Clientes",
