@@ -3,7 +3,6 @@ using PRUEBA.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 👇 ESTA LÍNEA ES LA CLAVE
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

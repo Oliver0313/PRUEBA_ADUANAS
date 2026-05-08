@@ -16,62 +16,55 @@ namespace PRUEBA.Controllers
             _context = context;
         }
 
-        // GET
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var productos = await _context.Productos.ToListAsync();
-            return Ok(productos);
+            return Ok(await _context.Productos.ToListAsync());
         }
 
-        // GET by ID
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
-
-            if (producto == null)
-                return NotFound("Producto no encontrado");
-
+            if (producto == null) return NotFound("Producto no encontrado");
             return Ok(producto);
         }
 
-        // POST
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Producto producto)
         {
+            if (producto == null) return BadRequest();
+
             _context.Productos.Add(producto);
             await _context.SaveChangesAsync();
 
             return Ok(producto);
         }
 
-        // PUT
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Producto producto)
         {
-            if (id != producto.Id)
-                return BadRequest("ID no coincide");
+            if (id != producto.Id) return BadRequest("ID no coincide");
 
-            _context.Entry(producto).State = EntityState.Modified;
+            var existe = await _context.Productos.AnyAsync(x => x.Id == id);
+            if (!existe) return NotFound("Producto no existe");
+
+            _context.Productos.Update(producto);
             await _context.SaveChangesAsync();
 
             return Ok(producto);
         }
 
-        // DELETE
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
-
-            if (producto == null)
-                return NotFound("Producto no encontrado");
+            if (producto == null) return NotFound();
 
             _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
 
-            return Ok("Producto eliminado");
+            return Ok("Eliminado");
         }
     }
 }

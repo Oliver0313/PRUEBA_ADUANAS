@@ -26,29 +26,30 @@ namespace PRUEBA.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-                return NotFound();
-
+            if (cliente == null) return NotFound("Cliente no encontrado");
             return Ok(cliente);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Cliente cliente)
+        public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
+            if (cliente == null) return BadRequest();
+
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = cliente.Id }, cliente);
+            return Ok(cliente);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Cliente cliente)
+        public async Task<IActionResult> Put(int id, [FromBody] Cliente cliente)
         {
-            if (id != cliente.Id)
-                return BadRequest();
+            if (id != cliente.Id) return BadRequest("ID no coincide");
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            var existe = await _context.Clientes.AnyAsync(x => x.Id == id);
+            if (!existe) return NotFound("Cliente no existe");
+
+            _context.Clientes.Update(cliente);
             await _context.SaveChangesAsync();
 
             return Ok(cliente);
@@ -58,14 +59,12 @@ namespace PRUEBA.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente == null)
-                return NotFound();
+            if (cliente == null) return NotFound();
 
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok("Eliminado");
         }
     }
 }

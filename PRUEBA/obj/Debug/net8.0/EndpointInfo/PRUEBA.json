@@ -399,8 +399,8 @@
             "nullable": true
           },
           "telefono": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

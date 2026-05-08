@@ -122,6 +122,7 @@ C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.AssemblyInfo.c
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.csproj.CoreCompileInputs.cache
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.sourcelink.json
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -137,4 +138,3 @@ C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\refint\PRUEBA.dll
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.pdb
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.genruntimeconfig.cache
 C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\ref\PRUEBA.dll
-C:\Users\mende\source\repos\PRUEBA\PRUEBA\obj\Debug\net8.0\PRUEBA.sourcelink.json
