@@ -10,6 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("VuePolicy",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -19,12 +30,12 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        Name = "Authorization",
+        Name = "Autorizacion",
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Escribe: Bearer {tu token}"
+        Description = "Coloca tu Token"
     });
 
     options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -59,13 +70,12 @@ builder.Services.AddAuthentication(options =>
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,               // 🔥 valida emisor
-        ValidateAudience = true,             // 🔥 valida audiencia
-        ValidateIssuerSigningKey = true,     // 🔥 valida firma
-        ValidateLifetime = true,             // 🔥 valida expiración
+        ValidateIssuer = true,               
+        ValidateAudience = true,             
+        ValidateIssuerSigningKey = true,     
+        ValidateLifetime = true,             
 
-        ClockSkew = TimeSpan.Zero,           // 🔥 sin margen de tiempo
-
+        ClockSkew = TimeSpan.Zero,           
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
 
@@ -77,12 +87,12 @@ builder.Services.AddAuthentication(options =>
     {
         OnAuthenticationFailed = context =>
         {
-            Console.WriteLine("❌ Token inválido");
+            Console.WriteLine("Token inválido");
             return Task.CompletedTask;
         },
         OnTokenValidated = context =>
         {
-            Console.WriteLine("✅ Token válido");
+            Console.WriteLine("Token válido");
             return Task.CompletedTask;
         }
     };
@@ -97,6 +107,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("VuePolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

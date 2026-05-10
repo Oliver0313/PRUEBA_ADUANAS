@@ -6,7 +6,7 @@ using PRUEBA.Models;
 
 namespace PRUEBA.Controllers
 {
-    [Authorize] // 🔒 Protege TODO el controller
+    [Authorize] 
     [Route("api/[controller]")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -18,7 +18,7 @@ namespace PRUEBA.Controllers
             _context = context;
         }
 
-        // 🔥 PRUEBA JWT
+       
         [HttpGet("debug")]
         public IActionResult Debug()
         {
@@ -31,14 +31,12 @@ namespace PRUEBA.Controllers
             });
         }
 
-        // 🔥 ENDPOINT DE PRUEBA SIMPLE
         [HttpGet("seguro")]
         public IActionResult Seguro()
         {
             return Ok("SI VES ESTO, PASASTE LA SEGURIDAD");
         }
 
-        // 🔍 GET: api/clientes
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -46,7 +44,6 @@ namespace PRUEBA.Controllers
             return Ok(clientes);
         }
 
-        // 🔍 GET: api/clientes/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -58,7 +55,6 @@ namespace PRUEBA.Controllers
             return Ok(cliente);
         }
 
-        // ➕ POST: api/clientes
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
@@ -68,7 +64,6 @@ namespace PRUEBA.Controllers
             return Ok(cliente);
         }
 
-        // ✏️ PUT: api/clientes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Cliente cliente)
         {
@@ -86,7 +81,6 @@ namespace PRUEBA.Controllers
             return Ok(cliente);
         }
 
-        // 🗑 DELETE: api/clientes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

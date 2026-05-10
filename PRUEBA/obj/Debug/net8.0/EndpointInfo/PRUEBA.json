@@ -565,7 +565,7 @@
     "securitySchemes": {
       "Bearer": {
         "type": "http",
-        "description": "Escribe: Bearer {tu token}",
+        "description": "Coloca tu Token",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
