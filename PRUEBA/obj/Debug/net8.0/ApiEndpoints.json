@@ -111,26 +111,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "PRUEBA.Controllers.ClientesController",
-    "Method": "Debug",
-    "RelativePath": "api/Clientes/debug",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "PRUEBA.Controllers.ClientesController",
-    "Method": "Seguro",
-    "RelativePath": "api/Clientes/seguro",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "PRUEBA.Controllers.ProductosController",
     "Method": "Get",
     "RelativePath": "api/Productos",

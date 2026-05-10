@@ -49,7 +49,7 @@ namespace PRUEBA.Controllers
                     u.Password == user.Password);
 
             if (usuario == null)
-                return Unauthorized("Credenciales incorrectas");
+                return Unauthorized("Informacion incorrectas");
 
             var token = GenerarToken(usuario);
 

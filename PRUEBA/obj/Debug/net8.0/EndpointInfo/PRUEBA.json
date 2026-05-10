@@ -67,30 +67,6 @@
         }
       }
     },
-    "/api/Clientes/debug": {
-      "get": {
-        "tags": [
-          "Clientes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Clientes/seguro": {
-      "get": {
-        "tags": [
-          "Clientes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Clientes": {
       "get": {
         "tags": [

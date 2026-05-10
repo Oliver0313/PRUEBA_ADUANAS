@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PRUEBA.Data;
 using PRUEBA.Models;
 
 namespace PRUEBA.Controllers
 {
-    [Authorize] 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -18,29 +18,11 @@ namespace PRUEBA.Controllers
             _context = context;
         }
 
-       
-        [HttpGet("debug")]
-        public IActionResult Debug()
-        {
-            var user = User.Identity?.Name;
-
-            return Ok(new
-            {
-                message = "Entraste correctamente",
-                user = user
-            });
-        }
-
-        [HttpGet("seguro")]
-        public IActionResult Seguro()
-        {
-            return Ok("SI VES ESTO, PASASTE LA SEGURIDAD");
-        }
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var clientes = await _context.Clientes.ToListAsync();
+
             return Ok(clientes);
         }
 
@@ -50,7 +32,7 @@ namespace PRUEBA.Controllers
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
-                return NotFound();
+                return NotFound("Cliente no encontrado");
 
             return Ok(cliente);
         }
@@ -58,7 +40,11 @@ namespace PRUEBA.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _context.Clientes.Add(cliente);
+
             await _context.SaveChangesAsync();
 
             return Ok(cliente);
@@ -73,9 +59,10 @@ namespace PRUEBA.Controllers
             var existe = await _context.Clientes.AnyAsync(c => c.Id == id);
 
             if (!existe)
-                return NotFound();
+                return NotFound("Cliente no encontrado");
 
             _context.Entry(cliente).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
 
             return Ok(cliente);
@@ -87,9 +74,10 @@ namespace PRUEBA.Controllers
             var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente == null)
-                return NotFound();
+                return NotFound("Cliente no encontrado");
 
             _context.Clientes.Remove(cliente);
+
             await _context.SaveChangesAsync();
 
             return Ok("Cliente eliminado");
