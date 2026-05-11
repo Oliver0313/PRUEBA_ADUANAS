@@ -111,6 +111,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PRUEBA.Controllers.ClientesController",
+    "Method": "LoginCliente",
+    "RelativePath": "api/Clientes/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "PRUEBA.Models.ClienteLoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PRUEBA.Controllers.ProductosController",
     "Method": "Get",
     "RelativePath": "api/Productos",

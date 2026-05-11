@@ -10,6 +10,7 @@ namespace PRUEBA.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
+
     {
         private readonly AppDbContext _context;
 
